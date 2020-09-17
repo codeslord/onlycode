@@ -1,4 +1,6 @@
 import os
+import tqdm
+import sys, token, tokenize
 
 def get_filepaths(directory):
     """
@@ -20,8 +22,6 @@ def get_filepaths(directory):
 
 """ Strip comments and docstrings from a file.
 """
-
-import sys, token, tokenize
 
 def do_file(fname):
     """ Run on just one file.
@@ -59,16 +59,16 @@ def do_file(fname):
         last_lineno = elineno
  
  
-# Run the above function and store its results in a variable.   
-full_file_paths = get_filepaths(r"_path_to_dir_")
+if __name__ == '__main__':
+    # Run the above function and store its results in a variable.   
+    full_file_paths = get_filepaths(r"_path_to_dir_")
+    for f in tqdm.tqdm(full_file_paths):
+        try:
+            if f.endswith(".py"):
+              do_file(f)
+        except FileNotFoundError:
+            continue
 
-for f in tqdm.tqdm(full_file_paths):
-    try:
-        if f.endswith(".py"):
-          do_file(f)
-    except FileNotFoundError:
-        continue
-        
         
         
         
